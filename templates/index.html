@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PrimeAuto</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <div class="container-fluid">
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarLeftAlignExample"
+      aria-controls="navbarLeftAlignExample"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            data-mdb-dropdown-init
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown2"
+            role="button"
+            aria-expanded="false"
+          >
+            Brands
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% for brand in brands %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'brand_detail' brand.id %}">{{ brand.name }}</a>
+                </li>
+              {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="mt-5 mb-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for car in cars %}
+        <div class="col">
+    <div class="card h-100">
+        {% if car.image %}
+      <img src="{{ car.image.url }}" class="card-img-top" alt="Palm Springs Road"/>
+        {% else %}
+        <img src="https://userway.org/blog/wp-content/uploads/2024/03/The-404-Page_-How-To-Turn-a-404-Error-Into-a-Win-for-Your-Website.jpg" class="card-img-top" alt="Palm Springs Road"/>
+        {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ car.name }}</h5>
+        <p class="card-text">
+          {{ car.description|truncatewords:64 }}
+        </p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <small class="text-muted">{{ car.created_at|date:"D d F Y" }} {{ car.created_at|time:"H:i" }}</small>
+        <small class="text-muted">{{ car.price }} USD</small>
+      </div>
+    </div>
+  </div>
+        {% endfor %}
+</div>
+</main>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
+</body>
+</html>
